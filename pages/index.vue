@@ -13,8 +13,16 @@
         <p>Action</p>
       </div>
 
-      <div class="task-manager-app--body" v-for="i in 7">
-        <TaskList />
+      <div
+        class="task-manager-app--body"
+        v-for="(task, index) in taskList"
+        :key="index"
+      >
+        <TaskList
+          :title="task.title"
+          :description="task.description"
+          :dueDate="task.dueDate"
+        />
       </div>
     </div>
 
@@ -26,19 +34,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import AddNewTaskModal from "../components/modals/AddNewTaskModal.vue";
+import { TaskDetails } from "../types/task";
+import { useTaskStore } from "../store/task";
+const taskStore = useTaskStore();
 
 const isDisplayingAddNewTaskModal = ref(false);
+const taskList = ref<TaskDetails[]>([]);
 
 const closeAddNewTaskModal = () => {
   isDisplayingAddNewTaskModal.value = false;
+  console.log("isDisplayingAddNewTaskModal", isDisplayingAddNewTaskModal.value);
 };
 
 const addNewTask = () => {
   isDisplayingAddNewTaskModal.value = true;
-  console.log("show add new task modal");
 };
+
+onMounted(() => {
+  taskList.value = taskStore.taskData;
+});
 </script>
 
 <style scoped>

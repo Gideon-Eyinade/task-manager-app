@@ -1,14 +1,20 @@
 <template>
   <div class="task-list--container">
-    <p style="width: 25%">Cleaning</p>
-    <p>This should be done every day</p>
-    <p>10am</p>
+    <p style="width: 25%">{{ title }}</p>
+    <p>{{ description }}</p>
+    <p>{{ dueDate }}</p>
     <p>Pending</p>
     <p style="cursor: pointer">Edit</p>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+  title: string;
+  description: string;
+  dueDate;
+}>();
+</script>
 
 <style scoped>
 .task-list--container {

@@ -34,6 +34,16 @@ export default defineNuxtConfig({
         "~/assets/styles/index.scss",
         "~/assets/fonts/satoshi/satoshi.css"
       ],
+
+      modules: [
+		[
+			'@pinia/nuxt',
+
+			{
+				autoImports: ['defineStore', 'acceptHMRUpdate'],
+			},
+		],
+	],
    
   })
   

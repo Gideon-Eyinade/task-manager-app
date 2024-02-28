@@ -4,9 +4,6 @@
       <div class="modal-header">
         <p style="font-size: 18px">Add New Task</p>
         <div class="close-icon" @click="$emit('close-modal')">X</div>
-        <span class="close-icon" @click="$emit('close-modal')"
-          ><font-awesome-icon icon="fa fa-times-circle"
-        /></span>
       </div>
 
       <div class="modal-body">
@@ -25,18 +22,38 @@
           <input v-model="dueDate" />
         </div>
 
-        <button>Add</button>
+        <button @click="addTask">Add</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
+import { ref } from "vue";
+import { useTaskStore } from "../../store/task";
+const taskStore = useTaskStore();
 
 const title = ref("");
 const description = ref("");
 const dueDate = ref("");
+
+const emits = defineEmits(["close-modal"]);
+
+const addTask = () => {
+  // const newTask = { title, description, dueDate };
+  const newTask = {
+    id: 1,
+    title: title.value,
+    description: description.value,
+    dueDate: dueDate.value,
+    status: true
+  };
+
+  taskStore.addNewTask(newTask);
+
+  console.log("newTask", newTask);
+  emits("close-modal");
+};
 
 // watch(phone_number, () => {
 
