@@ -3,7 +3,8 @@
     <div class="task-manager-app">
       <h3 style="color: rgb(0, 145, 255)">Task Manager Dashboard</h3>
 
-      <button>Add New Task</button>
+      <button @click="addNewTask">Add New Task</button>
+
       <div class="task-manager-app--header">
         <p>Title</p>
         <p>Description</p>
@@ -16,10 +17,29 @@
         <TaskList />
       </div>
     </div>
+
+    <AddNewTaskModal
+      v-if="isDisplayingAddNewTaskModal"
+      @close-modal="closeAddNewTaskModal"
+    />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import AddNewTaskModal from "../components/modals/AddNewTaskModal.vue";
+
+const isDisplayingAddNewTaskModal = ref(false);
+
+const closeAddNewTaskModal = () => {
+  isDisplayingAddNewTaskModal.value = false;
+};
+
+const addNewTask = () => {
+  isDisplayingAddNewTaskModal.value = true;
+  console.log("show add new task modal");
+};
+</script>
 
 <style scoped>
 .task-manager-app--container {
