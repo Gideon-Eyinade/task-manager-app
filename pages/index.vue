@@ -22,6 +22,7 @@
           :title="task.title"
           :description="task.description"
           :dueDate="task.dueDate"
+          @edit-task="editTask"
         />
       </div>
     </div>
@@ -30,26 +31,41 @@
       v-if="isDisplayingAddNewTaskModal"
       @close-modal="closeAddNewTaskModal"
     />
+    <EditTaskModal
+      v-if="isDisplayingEditTaskModal"
+      @close-modal="closeEditTaskModal"
+      :task-detail="activeTaskList"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import AddNewTaskModal from "../components/modals/AddNewTaskModal.vue";
+import EditTaskModal from "../components/modals/EditTaskModal.vue";
 import { TaskDetails } from "../types/task";
 import { useTaskStore } from "../store/task";
 const taskStore = useTaskStore();
 
 const isDisplayingAddNewTaskModal = ref(false);
+const isDisplayingEditTaskModal = ref(false);
 const taskList = ref<TaskDetails[]>([]);
+let activeTaskList = ref();
 
 const closeAddNewTaskModal = () => {
   isDisplayingAddNewTaskModal.value = false;
-  console.log("isDisplayingAddNewTaskModal", isDisplayingAddNewTaskModal.value);
 };
 
+const closeEditTaskModal = () => {
+  isDisplayingEditTaskModal.value = false;
+};
 const addNewTask = () => {
   isDisplayingAddNewTaskModal.value = true;
+};
+const editTask = (task: any) => {
+  isDisplayingEditTaskModal.value = true;
+  activeTaskList.value = task;
+  console.log("show active task", activeTaskList);
 };
 
 onMounted(() => {

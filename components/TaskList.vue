@@ -4,7 +4,7 @@
     <p>{{ description }}</p>
     <p>{{ dueDate }}</p>
     <p>Pending</p>
-    <p style="cursor: pointer">Edit</p>
+    <p style="cursor: pointer" @click="editTask">Edit</p>
   </div>
 </template>
 
@@ -14,6 +14,12 @@ const props = defineProps<{
   description: string;
   dueDate;
 }>();
+
+const emits = defineEmits(["edit-task"]);
+const editTask = () => {
+  emits("edit-task", props);
+  console.log("edit task");
+};
 </script>
 
 <style scoped>
