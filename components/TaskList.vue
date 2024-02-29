@@ -1,5 +1,6 @@
 <template>
   <div class="task-list--container">
+    <p>{{ id }}</p>
     <p style="width: 25%">{{ title }}</p>
     <p>{{ description }}</p>
     <p>{{ dueDate }}</p>
@@ -10,6 +11,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
+  id: string;
   title: string;
   description: string;
   dueDate;

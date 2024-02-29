@@ -8,6 +8,11 @@
 
       <div class="modal-body">
         <div class="form-input">
+          <p>ID</p>
+          <input v-model="taskDetail.id" />
+        </div>
+
+        <div class="form-input">
           <p>Title</p>
           <input v-model="taskDetail.title" />
         </div>
@@ -22,36 +27,33 @@
           <input v-model="taskDetail.dueDate" />
         </div>
 
-        <button @click="editTask">Add</button>
+        <button @click="editTask">Edit</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { useTaskStore } from "../../store/task";
-const taskStore = useTaskStore();
 import { TaskDetails } from "../../types/task";
 
+const taskStore = useTaskStore();
+const emits = defineEmits(["close-modal"]);
 const props = defineProps<{
   taskDetail: TaskDetails;
 }>();
 
-const emits = defineEmits(["close-modal"]);
-
 const editTask = () => {
   const newTask = {
-    id: 1,
+    id: props.taskDetail.id,
     title: props.taskDetail.title,
     description: props.taskDetail.description,
     dueDate: props.taskDetail.dueDate,
     status: true
   };
 
-  taskStore.addNewTask(newTask);
-
-  console.log("newTask", newTask);
+  taskStore.updateTask(newTask);
+  console.log("newtask", newTask);
   emits("close-modal");
 };
 </script>

@@ -8,6 +8,11 @@
 
       <div class="modal-body">
         <div class="form-input">
+          <p>ID</p>
+          <input v-model="id" />
+        </div>
+
+        <div class="form-input">
           <p>Title</p>
           <input v-model="title" />
         </div>
@@ -33,6 +38,7 @@ import { ref } from "vue";
 import { useTaskStore } from "../../store/task";
 const taskStore = useTaskStore();
 
+const id = ref();
 const title = ref("");
 const description = ref("");
 const dueDate = ref("");
@@ -40,9 +46,8 @@ const dueDate = ref("");
 const emits = defineEmits(["close-modal"]);
 
 const addTask = () => {
-  // const newTask = { title, description, dueDate };
   const newTask = {
-    id: 1,
+    id: id.value,
     title: title.value,
     description: description.value,
     dueDate: dueDate.value,
@@ -51,22 +56,8 @@ const addTask = () => {
 
   taskStore.addNewTask(newTask);
 
-  console.log("newTask", newTask);
   emits("close-modal");
 };
-
-// watch(phone_number, () => {
-
-//   validatePhoneNumber(phone_number.value);
-
-// });
-
-// const isDisabled = computed(() => {
-//   return (
-//     hasPhoneNumberError.value ||
-
-//   );
-// });
 </script>
 
 <style scoped>
@@ -90,7 +81,7 @@ const addTask = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 40%;
+  height: 50%;
   width: 30%;
   position: relative;
   z-index: 10;

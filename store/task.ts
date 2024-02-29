@@ -15,11 +15,20 @@ export const useTaskStore = defineStore('task', () => {
     const addNewTask = (taskDetails: any) => {
         localStorage.setItem("task_data", JSON.stringify(taskData.value.push(taskDetails)) || "")
     }
+    
+    const updateTask = (taskDetails: any) => {        
+        let updatedTaskData = taskData.value.map(task => (task.id == taskDetails.id ? {...task, taskDetails} : task))
+
+        localStorage.setItem("task_data", JSON.stringify(updatedTaskData))
+    }
+
+
 
 
     return {
         taskData: skipHydrate(taskData),
-        addNewTask
+        addNewTask,
+        updateTask
     }
 
 })

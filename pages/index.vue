@@ -6,6 +6,7 @@
       <button @click="addNewTask">Add New Task</button>
 
       <div class="task-manager-app--header">
+        <p>ID</p>
         <p>Title</p>
         <p>Description</p>
         <p>Due date</p>
@@ -19,6 +20,7 @@
         :key="index"
       >
         <TaskList
+          :id="task.id"
           :title="task.title"
           :description="task.description"
           :dueDate="task.dueDate"
